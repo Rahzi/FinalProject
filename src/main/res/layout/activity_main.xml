@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivBack"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="0dp"
@@ -21,7 +21,7 @@
         app:srcCompat="@android:color/holo_purple" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvPop"
         android:layout_width="65dp"
         android:layout_height="44dp"
         android:layout_marginStart="8dp"
@@ -36,7 +36,7 @@
         android:textColorHighlight="@android:color/darker_gray"
         android:textSize="30sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/btnGetStarted"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
         app:layout_constraintVertical_bias="0.486" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnGetStarted"
         android:layout_width="133dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

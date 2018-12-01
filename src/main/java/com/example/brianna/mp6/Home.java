@@ -1,4 +1,30 @@
 package com.example.brianna.mp6;
 
-public class Home {
+import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.FrameLayout;
+
+public class Home extends AppCompatActivity {
+
+    private FrameLayout frames;
+    private BubbleFragment bubbleFragment;
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.home);
+
+        frames = (FrameLayout) findViewById(R.id.frame);
+        bubbleFragment = new BubbleFragment();
+        setFragment(bubbleFragment);
+    }
+
+    private void setFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, fragment);
+        fragmentTransaction.commit();
+    }
 }

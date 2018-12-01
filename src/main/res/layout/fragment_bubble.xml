@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".BubbleFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.igalata.bubblepicker.rendering.BubblePicker
+        android:id="@+id/picker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        app:backgroundColor="@android:color/darker_gray" />
 
 </FrameLayout>

@@ -1,12 +1,26 @@
 package com.example.brianna.mp6;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.igalata.bubblepicker.BubblePickerListener;
+import com.igalata.bubblepicker.adapter.BubblePickerAdapter;
+import com.igalata.bubblepicker.model.BubbleGradient;
+import com.igalata.bubblepicker.model.PickerItem;
+import com.igalata.bubblepicker.rendering.BubblePicker;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 
 /**
@@ -28,6 +42,42 @@ public class BubbleFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    // bubble picker
+    BubblePicker bubblePicker;
+
+    String[] names = {
+            "Spiritual",
+            "Reflection",
+            "Motivation",
+            "Feelings",
+            "Environment",
+            "Social",
+            "Empathy",
+            "Regulation"
+    };
+
+    int[] images = {
+            R.drawable.gradient1,
+            R.drawable.palm_tree,
+            R.drawable.images,
+            R.drawable.images_2,
+            R.drawable.gradient,
+            R.drawable.skyline,
+            R.drawable.sunset,
+            R.drawable.wave
+    };
+
+    int[] colors = {
+            Color.parseColor("#e87aad"),
+            Color.parseColor("#7edaea"),
+            Color.parseColor("#f2f07b"),
+            Color.parseColor("#70f496"),
+            Color.parseColor("#f9ad72"),
+            Color.parseColor("#f45642"),
+            Color.parseColor("#8886e0"),
+            Color.parseColor("#8da85a")
+    };
+
 
     public BubbleFragment() {
         // Required empty public constructor
@@ -58,13 +108,51 @@ public class BubbleFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bubble, container, false);
+        View view = inflater.inflate(R.layout.fragment_bubble, container, false);
+        bubblePicker = (BubblePicker) view.findViewById(R.id.picker);
+        ArrayList<PickerItem> listItems = new ArrayList<>();
+        for (int i = 0; i < names.length; i++) {
+            //names[i], colors[i], Color.WHITE, getDrawable((images[i])
+            PickerItem item = new PickerItem();
+            item.setTitle(names[i]);
+            listItems.add(item);
+        }
+        bubblePicker.setAdapter(new BubblePickerAdapter() {
+            @Override
+            public int getTotalCount() {
+                return names.length;
+            }
+
+            @NotNull
+            @Override
+            public PickerItem getItem(int i) {
+                PickerItem item = new PickerItem();
+                item.setTitle(names[i]);
+                item.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                item.setBackgroundImage(ContextCompat.getDrawable(getContext(),images[i]));
+                return item;
+            }
+        });
+        bubblePicker.setListener(new BubblePickerListener() {
+            @Override
+            public void onBubbleSelected(@NotNull PickerItem pickerItem) {
+                Toast.makeText(getActivity(), ""+pickerItem.getTitle()+" selected", Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void onBubbleDeselected(@NotNull PickerItem pickerItem) {
+                Toast.makeText(getActivity(), ""+pickerItem.getTitle()+" Deselected", Toast.LENGTH_SHORT);
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -74,16 +162,16 @@ public class BubbleFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+//    }
 
     @Override
     public void onDetach() {
