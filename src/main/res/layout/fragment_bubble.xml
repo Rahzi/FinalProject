@@ -10,6 +10,6 @@
         android:id="@+id/picker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:backgroundColor="@android:color/darker_gray" />
+        app:backgroundColor="@android:color/background_light" />
 
 </FrameLayout>

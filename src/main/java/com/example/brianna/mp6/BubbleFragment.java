@@ -1,7 +1,5 @@
 package com.example.brianna.mp6;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,13 +12,13 @@ import android.widget.Toast;
 
 import com.igalata.bubblepicker.BubblePickerListener;
 import com.igalata.bubblepicker.adapter.BubblePickerAdapter;
-import com.igalata.bubblepicker.model.BubbleGradient;
 import com.igalata.bubblepicker.model.PickerItem;
 import com.igalata.bubblepicker.rendering.BubblePicker;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -41,8 +39,8 @@ public class BubbleFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    public List<String> selected = new ArrayList<>();
     private OnFragmentInteractionListener mListener;
-    // bubble picker
     BubblePicker bubblePicker;
 
     String[] names = {
@@ -117,7 +115,16 @@ public class BubbleFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bubble, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         bubblePicker = (BubblePicker) view.findViewById(R.id.picker);
+        bubblePicker.setCenterImmediately(true);
         ArrayList<PickerItem> listItems = new ArrayList<>();
         for (int i = 0; i < names.length; i++) {
             //names[i], colors[i], Color.WHITE, getDrawable((images[i])
@@ -136,6 +143,7 @@ public class BubbleFragment extends Fragment {
             public PickerItem getItem(int i) {
                 PickerItem item = new PickerItem();
                 item.setTitle(names[i]);
+                item.setColor(colors[i]);
                 item.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
                 item.setBackgroundImage(ContextCompat.getDrawable(getContext(),images[i]));
                 return item;
@@ -144,16 +152,30 @@ public class BubbleFragment extends Fragment {
         bubblePicker.setListener(new BubblePickerListener() {
             @Override
             public void onBubbleSelected(@NotNull PickerItem pickerItem) {
-                Toast.makeText(getActivity(), ""+pickerItem.getTitle()+" selected", Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), ""+pickerItem.getTitle()+" selected", Toast.LENGTH_SHORT).show();
+                selected.add(pickerItem.getTitle());
             }
 
             @Override
             public void onBubbleDeselected(@NotNull PickerItem pickerItem) {
-                Toast.makeText(getActivity(), ""+pickerItem.getTitle()+" Deselected", Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), ""+pickerItem.getTitle()+" Deselected", Toast.LENGTH_SHORT).show();
+                selected.remove(pickerItem.getTitle());
             }
         });
-        return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        bubblePicker.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        bubblePicker.onPause();
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
